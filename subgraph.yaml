@@ -1,0 +1,32 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PBBFactory
+    network: sepolia
+    source:
+      address: "0xc74b6f8E94d7CE7cE3AaF7DAB8d378D910b64710"
+      abi: PBBFactory
+      startBlock: 7668872
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ImplementationAdded
+        - OwnershipTransferred
+        - PBBCreated
+      abis:
+        - name: PBBFactory
+          file: ./abis/PBBFactory.json
+      eventHandlers:
+        - event: ImplementationAdded(uint256,address)
+          handler: handleImplementationAdded
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PBBCreated(indexed address,indexed address,uint256,string)
+          handler: handlePBBCreated
+      file: ./src/pbb-factory.ts

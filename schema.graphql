@@ -1,0 +1,28 @@
+type ImplementationAdded @entity(immutable: true) {
+  id: Bytes!
+  version: BigInt! # uint256
+  implementation: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PBBCreated @entity(immutable: true) {
+  id: Bytes!
+  creator: Bytes! # address
+  pbbAddress: Bytes! # address
+  version: BigInt! # uint256
+  name: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
