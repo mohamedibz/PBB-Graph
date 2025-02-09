@@ -8,8 +8,7 @@ import {
 } from "matchstick-as/assembly/index"
 import { BigInt, Address } from "@graphprotocol/graph-ts"
 import { ImplementationAdded } from "../generated/schema"
-import { ImplementationAdded as ImplementationAddedEvent } from "../generated/PBBFactory/PBBFactory"
-import { handleImplementationAdded } from "../src/pbb-factory"
+import { handleImplementationAdded } from "../src/factory"
 import { createImplementationAddedEvent } from "./pbb-factory-utils"
 
 // Tests structure (matchstick-as >=0.5.0)

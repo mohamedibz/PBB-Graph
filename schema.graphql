@@ -1,28 +1,25 @@
-type ImplementationAdded @entity(immutable: true) {
-  id: Bytes!
-  version: BigInt! # uint256
-  implementation: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+
+type PBB @entity {
+  id: ID!                     # Dirección del contrato PBB (clave primaria)
+  creator: User!             # Dirección del creador del PBB
+  name: String!               # Nombre del PBB
+  timestamp: BigInt!          # Marca de tiempo de la creación
+  authorizedUsers: [User!]!   # Relación con usuarios autorizados
+  messages: [Message!]!       # Relación con los mensajes asociados
 }
 
-type OwnershipTransferred @entity(immutable: true) {
-  id: Bytes!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type User @entity {
+  id: ID!                                                # Dirección del usuario (clave primaria)
+  createdPBBs: [PBB!] @derivedFrom(field: "creator")     # PBBs creados por este usuario
+  authorizedPBBs: [PBB!]                                 # PBBs en los que este usuario está autorizado
 }
 
-type PBBCreated @entity(immutable: true) {
-  id: Bytes!
-  creator: Bytes! # address
-  pbbAddress: Bytes! # address
-  version: BigInt! # uint256
-  name: String! # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Message @entity {
+  id: ID!                     # ID único del mensaje (transacción + logIndex)
+  pbb: PBB!                   # Relación con el PBB al que pertenece
+  sender: User!              # Dirección del remitente del mensaje
+  topic: String!              # Tema del mensaje
+  content: String!            # Contenido del mensaje
+  timestamp: BigInt!          # Marca de tiempo del mensaje
 }
+
