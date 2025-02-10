@@ -1,13 +1,6 @@
 import { DataSourceTemplate } from "@graphprotocol/graph-ts"
-import {
-  ImplementationAdded as ImplementationAddedEvent,
-  OwnershipTransferred as OwnershipTransferredEvent,
-  PBBCreated as PBBCreatedEvent
-} from "../generated/PBBFactory/PBBFactory"
-import {
-  PBB,
-  User,
-} from "../generated/schema"
+import { PBBCreated as PBBCreatedEvent } from "../generated/PBBFactory/PBBFactory"
+import { PBB, User } from "../generated/schema"
 
 export function handlePBBCreated(event: PBBCreatedEvent): void {
   let pbb = new PBB(event.params.pbbAddress.toHex());
