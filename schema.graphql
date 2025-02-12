@@ -1,25 +1,36 @@
 
 type PBB @entity {
-  id: ID!                     # Dirección del contrato PBB (clave primaria)
-  creator: User!             # Dirección del creador del PBB
-  name: String!               # Nombre del PBB
-  timestamp: BigInt!          # Marca de tiempo de la creación
-  authorizedUsers: [User!]!   # Relación con usuarios autorizados
-  messages: [Message!]!       # Relación con los mensajes asociados
+  id: ID!                     
+  creator: User!
+  admins: [User!]!            
+  name: String!              
+  timestamp: BigInt!
+  version: BigInt!          
+  members: [User!]!   
+  messages: [Message!]!       
 }
 
 type User @entity {
-  id: ID!                                                # Dirección del usuario (clave primaria)
-  createdPBBs: [PBB!] @derivedFrom(field: "creator")     # PBBs creados por este usuario
-  authorizedPBBs: [PBB!]                                 # PBBs en los que este usuario está autorizado
+  id: ID!                                                
+  createdPBBs: [PBB!] @derivedFrom(field: "creator")    
+  authorizedPBBs: [PBB!]                                
 }
 
 type Message @entity {
-  id: ID!                     # ID único del mensaje (transacción + logIndex)
-  pbb: PBB!                   # Relación con el PBB al que pertenece
-  sender: User!              # Dirección del remitente del mensaje
-  topic: String!              # Tema del mensaje
-  content: String!            # Contenido del mensaje
-  timestamp: BigInt!          # Marca de tiempo del mensaje
+  id: ID!                    
+  pbb: PBB!                  
+  sender: User!             
+  topic: String!              
+  content: String!            
+  timestamp: BigInt!          
+  txHash: Bytes!  
+}
+
+type Comment @entity {
+  id: ID!                     
+  message: Message!          
+  commenter: User!            
+  content: String!           
+  timestamp: BigInt!        
 }
 

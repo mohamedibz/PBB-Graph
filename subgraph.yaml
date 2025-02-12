@@ -9,7 +9,7 @@ dataSources:
     name: PBBFactory
     network: sepolia
     source:
-      address: "0x52cEcf20A9A2ECFf94c2D8459960BFD42324b63E"
+      address: "0x52e2FD6E436f5E2aE4675260638D57a331c79514"
       abi: PBBFactory
       startBlock: 7668872
     mapping:
@@ -18,18 +18,22 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - ImplementationAdded
-        - OwnershipTransferred
         - PBBCreated
+        - PBBUpdated
       abis:
         - name: PBBFactory
           file: ./abis/PBBFactory.json
       eventHandlers:
-      #  - event: ImplementationAdded(uint256,address)
-      #    handler: handleImplementationAdded
-      #  - event: OwnershipTransferred(indexed address,indexed address)
-      #    handler: handleOwnershipTransferred
+
         - event: PBBCreated(indexed address,indexed address,uint256,string)
           handler: handlePBBCreated
+
+        - event: ImplementationAdded(address,uint256)
+          handler: handleImplementationAdded
+
+        - event: PBBUpdated(indexed address,uint256)
+          handler: handlePBBUpdated
+
       file: ./src/factory.ts
 
 
@@ -44,17 +48,29 @@ templates:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - UserAuthorized
         - Message
+        - User
       abis:
+
         - name: PBB
           file: ./abis/pbb.json
+
       eventHandlers:
-        - event: UserAuthorized(indexed address,indexed address,uint256)
-          handler: handleUserAuthorized
+
+        - event: MemberAdded(indexed address,indexed address,uint256)
+          handler: handleMemberAdded
+
+        - event: MemberRemoved(indexed address,indexed address,uint256)
+          handler: handleMemberRemoved 
+
         - event: MessageAdded(indexed address,string,string,uint256)
           handler: handleMessageAdded
-        - event: UserRevoked(indexed address,indexed address,uint256)
-          handler: handleUserRevoked
+
+        - event: AdminAdded(indexed address,indexed address,uint256)
+          handler: handleAdminAdded
+
+        - event: AdminRevoked(indexed address,indexed address,uint256)
+          handler: handleAdminRevoked
+
       file: ./src/pbb.ts
 
